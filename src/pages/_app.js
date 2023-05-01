@@ -1,5 +1,4 @@
-import Voting from "@/components/Vote/Voting";
-import Login from "@/components/auth/Login";
+
 import Image from "next/image";
 
 import "@/pages/styles/globals.css";
