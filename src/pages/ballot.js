@@ -87,9 +87,28 @@ function VotingApp() {
   ];
 
   return (
-    <div className="max-w-md m-auto ">
-      <h1 className="text-2xl text-center font-bold text-gray-800 mb-4">Vote for your favorite candidate</h1>
-      <div onClick={handleReset} className='text-right cursor-pointer'>Reset</div>
+    
+
+    <div className="min-h-screen bg-gray-100">
+      {/* Navbar */}
+      <nav className="bg-white shadow-md">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="flex justify-between items-center">
+            <div className="flex">
+              <a className="flex items-center py-5 px-2 text-gray-700 hover:text-gray-900 font-bold text-xl" href="#">
+                <span className="mr-1">🗳️</span>
+                <span>Voting App</span>
+              </a>
+            </div>
+            <div className="flex items-center">
+              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleReset}>Reset</button>
+            </div>
+          </div>
+        </div>
+        <div className="h-0.5 bg-gray-200"></div>
+      </nav>
+
+      <div className="max-w-md m-auto ">
       {candidates.map((candidate) => (
         <div
           key={candidate.id}
@@ -113,6 +132,12 @@ function VotingApp() {
         </div>
       ))}
       
+    </div>
+    <footer className="bg-gray-800 text-white py-3">
+    <div className="max-w-6xl mx-auto px-4">
+      <p className="text-center">&copy; 2023 Voting App. All rights reserved.</p>
+    </div>
+  </footer>
     </div>
   );
 }

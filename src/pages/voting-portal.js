@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 function Votal_Portal() {
   const router = useRouter()
   return (
-    <div>
+    <div style={{ height: '100%' }}>
     <header className="bg-gray-800 text-white py-4">
       <div className="max-w-4xl mx-auto px-4">
         <h1 className="text-xl font-bold">Election Categories</h1>
@@ -83,6 +83,11 @@ function Votal_Portal() {
         </button>
       </div>
     </div>
+    <footer className="bg-gray-800 text-white py-3 mt-20">
+      <div className="max-w-6xl mx-auto px-4">
+        <p className="text-center">&copy; 2023 Voting App. All rights reserved.</p>
+      </div>
+    </footer>
   </div>
   );
 }

@@ -11,7 +11,11 @@ export default function Home() {
   return (
     <>
       <Login />
-     
+      <footer className="bg-gray-800 text-white py-3">
+      <div className="max-w-6xl mx-auto px-4">
+        <p className="text-center">&copy; 2023 Voting App. All rights reserved.</p>
+      </div>
+    </footer>
     </>
   );
 }
