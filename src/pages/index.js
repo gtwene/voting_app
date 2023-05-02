@@ -1,15 +1,17 @@
 
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Votal_Portal from './components/Vote/Voting_portal';
-import Login from './components/auth/Login';
-import VotingApp from './components/Vote/Voting';
+import { useRouter } from "next/router";
+import VotingApp from './ballot';
+import Login from './components/Login';
+import Votal_Portal from './voting-portal';
 
 export default function Home() {
+
+  const router = useRouter()
+  
   return (
     <>
       <Login />
-      <VotingApp />
-      <Votal_Portal />
+     
     </>
   );
 }
