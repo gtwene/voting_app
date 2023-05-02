@@ -1,6 +1,8 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 
 const Login = () => {
+  const router = useRouter()
   return (
     <div className="flex flex-col justify-center items-center h-screen">
       <form className="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 w-80">
@@ -19,7 +21,7 @@ const Login = () => {
           {/* <p className="text-red-500 text-xs italic">Please choose a password.</p> */}
         </div>
         <div className="flex items-center justify-between">
-          <button className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+          <button onClick={()=>{router.push("/voting-portal")}} className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
             Login
           </button>
           <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">

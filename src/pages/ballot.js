@@ -25,12 +25,18 @@ function VotingApp() {
       });
     } else {
       setVotes((prevState) => {
-        return { ...prevState, [candidate]: prevState[candidate] + 1 };
+        const prevCandidate = Object.keys(prevState).find((c) => prevState[c] > 0);
+        if (prevCandidate && prevCandidate !== candidate) {
+          // Reset previous vote to zero
+          return { ...prevState, [prevCandidate]: 0, [candidate]: 1 };
+        } else {
+          return { ...prevState, [candidate]: prevState[candidate] + 1 };
+        }
       });
       setVoted(true);
-      
+  
       // Show sweetalert after the user has voted
-      swal({
+      Swal({
         title: 'Success!',
         text: 'Thank you for voting!',
         icon: 'success',
@@ -38,6 +44,19 @@ function VotingApp() {
       });
     }
   };
+  
+  const handleReset = () => {
+    setVotes({
+      candidate1: 0,
+      candidate2: 0,
+      candidate3: 0,
+      candidate4: 0,
+      candidate5: 0,
+    });
+    setVoted(false);
+  };
+  
+  
 
   const candidates = [
     {
@@ -70,6 +89,7 @@ function VotingApp() {
   return (
     <div className="max-w-md m-auto ">
       <h1 className="text-2xl text-center font-bold text-gray-800 mb-4">Vote for your favorite candidate</h1>
+      <div onClick={handleReset} className='text-right cursor-pointer'>Reset</div>
       {candidates.map((candidate) => (
         <div
           key={candidate.id}
@@ -92,6 +112,7 @@ function VotingApp() {
           </button>
         </div>
       ))}
+      
     </div>
   );
 }
