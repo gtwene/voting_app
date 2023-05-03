@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Modal } from "@mantine/core";
 import ElectionCard from "@/pages/components/ElectionCard";
 import axios from "axios";
+import { useRouter } from "next/router";
+
 function AdminDashboard() {
   const [showModal, setShowModal] = useState(false);
   const [elections, setElections] = useState([]);
@@ -14,6 +16,9 @@ function AdminDashboard() {
       setElections(response.data);
     });
   }, []);
+
+  const router = useRouter();
+
   return (
     <>
       <Modal
@@ -109,8 +114,13 @@ function AdminDashboard() {
 
             <div className="w-[90%]">
               <div className="grid grid-cols-3 gap-4">
-                {elections.map(() => (
-                  <ElectionCard />
+                {elections.map((i) => (
+                  <ElectionCard
+                    name={i?.electionName}
+                    onClick={() => {
+                      router.push(`/auth/admin/election/${i?.id}`);
+                    }}
+                  />
                 ))}
               </div>
             </div>
