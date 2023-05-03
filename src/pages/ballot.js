@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import React, { useState } from "react";
+import { Transition } from "@headlessui/react";
 import Swal from 'sweetalert';
-import { useHistory } from 'react-router-dom';
-
 
 function VotingApp() {
+  const [currentCard, setCurrentCard] = useState(1);
   const [votes, setVotes] = useState({
     candidate1: 0,
     candidate2: 0,
@@ -55,8 +55,10 @@ function VotingApp() {
     });
     setVoted(false);
   };
-  
-  
+
+  const handleCardClick = () => {
+    setCurrentCard(currentCard === 1 ? 2 : 1);
+  };
 
   const candidates = [
     {
@@ -86,29 +88,41 @@ function VotingApp() {
     },
   ];
 
-  return (
-    
-
-    <div className="min-h-screen bg-gray-100">
-      {/* Navbar */}
-      <nav className="bg-white shadow-md">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="flex justify-between items-center">
-            <div className="flex">
-              <a className="flex items-center py-5 px-2 text-gray-700 hover:text-gray-900 font-bold text-xl" href="#">
-                <span className="mr-1">🗳️</span>
-                <span>Voting App</span>
-              </a>
-            </div>
-            <div className="flex items-center">
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleReset}>Reset</button>
-            </div>
+  const transitions = [
+    {
+      key: 1,
+      show: currentCard === 1,
+      title: "Card 1",
+      content:  (<div className="max-w-md m-auto ">
+      {candidates.map((candidate) => (
+        <div
+          key={candidate.id}
+          className="bg-white shadow-md rounded px-8 py-6 flex items-center justify-between mt-4"
+        >
+          <div className="flex items-center">
+            <img
+              className="w-16 h-16 rounded-full mr-4"
+              src={candidate.imageUrl}
+              alt={candidate.name}
+            />
+            <span className="text-gray-800 text-lg font-bold">Godfrey Kwame</span>
           </div>
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            onClick={() => handleVote(`candidate${candidate.id}`)}
+            disabled={voted}
+          >
+            {voted ? 'Voted' : 'Vote'} ({votes[`candidate${candidate.id}`]})
+          </button>
         </div>
-        <div className="h-0.5 bg-gray-200"></div>
-      </nav>
-
-      <div className="max-w-md m-auto ">
+      ))}
+    </div>),
+    },
+    {
+      key: 2,
+      show: currentCard === 2,
+      title: "Card 2",
+      content: (<div className="max-w-md m-auto ">
       {candidates.map((candidate) => (
         <div
           key={candidate.id}
@@ -131,13 +145,64 @@ function VotingApp() {
           </button>
         </div>
       ))}
-      
-    </div>
-    <footer className="bg-gray-800 text-white py-3">
-    <div className="max-w-6xl mx-auto px-4">
-      <p className="text-center">&copy; 2023 Voting App. All rights reserved.</p>
-    </div>
-  </footer>
+    </div>),
+    },
+    // Add more transitions as needed
+  ];
+
+  return (
+    <div>
+       {/* Navbar */}
+       <nav className="bg-white shadow-md">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="flex justify-between items-center">
+            <div className="flex">
+              <a className="flex items-center py-5 px-2 text-gray-700 hover:text-gray-900 font-bold text-xl" href="#">
+                <span className="mr-1">🗳️</span>
+                <span>Voting App</span>
+              </a>
+            </div>
+            <div className="flex items-center">
+              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleReset}>Reset</button>
+            </div>
+          </div>
+        </div>
+        <div className="h-0.5 bg-gray-200"></div>
+      </nav>
+      <div className="card-component">
+        {transitions.map(({ key, show, title, content }) => (
+          <Transition
+            key={key}
+            show={show}
+            enter="transition-opacity duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="transition-opacity duration-300"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="">
+              <h2 className=""></h2>
+              <p className=""></p>
+              {content}
+
+              <div className="flex justify-end mb-5 ml-5">
+                <button
+                  className="block mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  onClick={handleCardClick}
+                >
+                  Next Card
+                </button>
+              </div>
+            </div>
+          </Transition>
+        ))}
+      </div>
+      <footer className="bg-gray-800 text-white py-3">
+        <div className="max-w-6xl mx-auto px-4">
+          <p className="text-center">&copy; 2023 Voting App. All rights reserved.</p>
+        </div>
+      </footer>
     </div>
   );
 }
