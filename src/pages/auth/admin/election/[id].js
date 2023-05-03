@@ -3,6 +3,15 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Modal, ScrollArea, Accordion } from "@mantine/core";
 import axios from "axios";
+import {
+  Chart as ChartJS,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
 import ViewCategory from "@/pages/components/ViewCategory";
 export default function ElectionId() {
   const [visitedElection, setVisitedElection] = useState([]);
@@ -21,6 +30,22 @@ export default function ElectionId() {
       });
   }, []);
 
+  ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
+  const data = {
+    labels: ["President", "VP", "Leone"],
+    datasets: [
+      {
+        label: "President",
+        data: [3, 6, 9],
+        backgroundColor: "aqua",
+      },
+      {
+        label: "Vice President",
+        data: [3, 6, 9],
+        backgroundColor: "pink",
+      },
+    ],
+  };
   function handleViewCategory(category) {
     setShowModal(true);
   }
@@ -103,6 +128,11 @@ export default function ElectionId() {
                 </>
               ))}
             </div>
+            <div className="h-2/3 mt-3">
+              <div className="text-gray-800">Election status</div>
+              <Bar data={data} />
+            </div>
+            {/* <div className="text-gray-800 mt-5">Audit Log</div> */}
           </main>
         </div>
       </div>
